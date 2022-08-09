@@ -19,7 +19,7 @@ Use the target character_id=# to get a character.
 This is setup like so
 
 ID: 
-  name: STRING // Marcus
+  name: STRING // Marcus 
   development_name: STRING //Shooter
   health: [INT] //Array of health numbers at different levels.
   power: [INT] //Array of power numbers.

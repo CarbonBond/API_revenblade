@@ -1,0 +1,52 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Character {
+  id: ID!
+  name: String!
+  health: [Int!]!
+  power: [Int!]!
+  movement_speed: Int!
+  lore: String
+  passive: Ability!
+  primary: Ability!
+  secondary: Ability!
+  mobility: Ability!
+  heavy: Ability!
+  defensive: Ability!
+}
+
+type Ability {
+  name: String!
+  description: String!
+  data: [String!]!
+}
+
+type Query {
+  characters: [Character!]!
+}
+
+input NewAbility {
+  name: String!
+  description: String!
+  data: [String!]!
+}
+
+input NewCharacter {
+  name: String!
+  health: [Int!]!
+  power: [Int!]!
+  movement_speed: Int!
+  lore: String
+  passive: NewAbility!
+  primary: NewAbility!
+  secondary: NewAbility!
+  mobility: NewAbility!
+  heavy: NewAbility!
+  defensive: NewAbility!
+}
+
+type Mutation {
+  createCharacter(input: NewCharacter!): Character!
+}
