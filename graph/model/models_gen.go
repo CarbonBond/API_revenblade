@@ -3,24 +3,10 @@
 package model
 
 type Ability struct {
+	ID          string   `json:"id"`
 	Name        string   `json:"name"`
 	Description string   `json:"description"`
 	Data        []string `json:"data"`
-}
-
-type Character struct {
-	ID            string   `json:"id"`
-	Name          string   `json:"name"`
-	Health        []int    `json:"health"`
-	Power         []int    `json:"power"`
-	MovementSpeed int      `json:"movement_speed"`
-	Lore          *string  `json:"lore"`
-	Passive       *Ability `json:"passive"`
-	Primary       *Ability `json:"primary"`
-	Secondary     *Ability `json:"secondary"`
-	Mobility      *Ability `json:"mobility"`
-	Heavy         *Ability `json:"heavy"`
-	Defensive     *Ability `json:"defensive"`
 }
 
 type NewAbility struct {
