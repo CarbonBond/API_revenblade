@@ -5,9 +5,8 @@ package graph
 
 import (
 	"context"
-	"fmt"
-	"math/rand"
 
+	"github.com/CarbonBond/API_revenblade/database"
 	"github.com/CarbonBond/API_revenblade/graph/generated"
 	"github.com/CarbonBond/API_revenblade/graph/model"
 )
@@ -44,73 +43,13 @@ func (r *characterResolver) Defensive(ctx context.Context, obj *model.Character)
 
 // CreateCharacter is the resolver for the createCharacter field.
 func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewCharacter) (*model.Character, error) {
-	abilityIDs := [6]string{
-		fmt.Sprintf("T%d", rand.Int()),
-		fmt.Sprintf("T%d", rand.Int()),
-		fmt.Sprintf("T%d", rand.Int()),
-		fmt.Sprintf("T%d", rand.Int()),
-		fmt.Sprintf("T%d", rand.Int()),
-		fmt.Sprintf("T%d", rand.Int()),
-	}
-
-	character := &model.Character{
-		ID:            fmt.Sprintf("T%d", rand.Int()),
-		Name:          input.Name,
-		Health:        input.Health,
-		Power:         input.Power,
-		MovementSpeed: input.MovementSpeed,
-		Lore:          input.Lore,
-		Passive: &model.Ability{
-			ID:          abilityIDs[0],
-			Name:        input.Passive.Name,
-			Description: input.Passive.Description,
-			Data:        input.Passive.Data,
-		},
-		PassiveID: abilityIDs[0],
-		Primary: &model.Ability{
-			ID:          abilityIDs[1],
-			Name:        input.Primary.Name,
-			Description: input.Primary.Description,
-			Data:        input.Primary.Data,
-		},
-		PrimaryID: abilityIDs[1],
-		Secondary: &model.Ability{
-			ID:          abilityIDs[2],
-			Name:        input.Secondary.Name,
-			Description: input.Secondary.Description,
-			Data:        input.Secondary.Data,
-		},
-		SecondaryID: abilityIDs[2],
-		Mobility: &model.Ability{
-			Name:        input.Mobility.Name,
-			ID:          abilityIDs[3],
-			Description: input.Mobility.Description,
-			Data:        input.Mobility.Data,
-		},
-		MobilityID: abilityIDs[3],
-		Heavy: &model.Ability{
-			ID:          abilityIDs[4],
-			Name:        input.Heavy.Name,
-			Description: input.Heavy.Description,
-			Data:        input.Heavy.Data,
-		},
-		HeavyID: abilityIDs[4],
-		Defensive: &model.Ability{
-			ID:          abilityIDs[5],
-			Name:        input.Defensive.Name,
-			Description: input.Defensive.Description,
-			Data:        input.Defensive.Data,
-		},
-		DefensiveID: abilityIDs[5],
-	}
-
-	r.characters = append(r.characters, character)
+	character := db.Save(input)
 	return character, nil
 }
 
 // Characters is the resolver for the Characters field.
 func (r *queryResolver) Characters(ctx context.Context) ([]*model.Character, error) {
-	return r.characters, nil
+	return db.All(), nil
 }
 
 // Character returns generated.CharacterResolver implementation.
@@ -125,3 +64,11 @@ func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 type characterResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+var db = database.Connect()
