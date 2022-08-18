@@ -5,9 +5,9 @@
 type Character {
   id: ID!
   name: String!
-  health: [Int!]!
-  power: [Int!]!
-  movement_speed: Int!
+  health: [Float!]!
+  power: [Float!]!
+  movement_speed: Float!
   lore: String
   passive: Ability!
   primary: Ability!
@@ -21,24 +21,25 @@ type Ability {
   id: ID!
   name: String!
   description: String!
-  data: [String!]!
+  data: String!
 }
 
 type Query {
+  character(_id: String!): Character!
   characters: [Character!]!
 }
 
 input NewAbility {
   name: String!
   description: String!
-  data: [String!]!
+  data: String!
 }
 
 input NewCharacter {
   name: String!
-  health: [Int!]!
-  power: [Int!]!
-  movement_speed: Int!
+  health: [Float!]!
+  power: [Float!]!
+  movement_speed: Float!
   lore: String
   passive: NewAbility!
   primary: NewAbility!

@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/CarbonBond/API_revenblade/database"
 	"github.com/CarbonBond/API_revenblade/graph/generated"
@@ -47,6 +48,12 @@ func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewC
 	return character, nil
 }
 
+// Character is the resolver for the character field.
+func (r *queryResolver) Character(ctx context.Context, id string) (*model.Character, error) {
+	character := db.FindByID(id)
+	return character, nil
+}
+
 // Characters is the resolver for the Characters field.
 func (r *queryResolver) Characters(ctx context.Context) ([]*model.Character, error) {
 	return db.All(), nil
@@ -71,4 +78,14 @@ type queryResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *characterResolver) Health(ctx context.Context, obj *model.Character) ([]float64, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *characterResolver) Power(ctx context.Context, obj *model.Character) ([]float64, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *characterResolver) MovementSpeed(ctx context.Context, obj *model.Character) (float64, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 var db = database.Connect()
