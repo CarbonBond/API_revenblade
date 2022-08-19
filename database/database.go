@@ -126,7 +126,6 @@ func (db *DB) Save(input model.NewCharacter) *model.Character {
 	}
 }
 
-//Not in schema yet should never be called. 
 func (db *DB) FindByID(ID string) *model.Character{
   ObjectID, err := primitive.ObjectIDFromHex(ID)
   if err != nil {
@@ -137,6 +136,18 @@ func (db *DB) FindByID(ID string) *model.Character{
   ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
   defer cancel();
   res := collection.FindOne(ctx, bson.M{"_id": ObjectID})
+  character := model.Character{}
+  res.Decode(&character)
+  return &character
+}
+
+func (db *DB) FindByName(name string) *model.Character{
+
+  collection := db.client.Database("revenblade").Collection("characters")
+  ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+  defer cancel();
+
+  res := collection.FindOne(ctx, bson.M{"name": name})
   character := model.Character{}
   res.Decode(&character)
   return &character

@@ -48,6 +48,12 @@ func (r *mutationResolver) CreateCharacter(ctx context.Context, input model.NewC
 	return character, nil
 }
 
+// CharacterName is the resolver for the characterName field.
+func (r *queryResolver) CharacterName(ctx context.Context, name string) (*model.Character, error) {
+	character := db.FindByName(name)
+	return character, nil
+}
+
 // Character is the resolver for the character field.
 func (r *queryResolver) Character(ctx context.Context, id string) (*model.Character, error) {
 	character := db.FindByID(id)
@@ -78,6 +84,8 @@ type queryResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
+var db = database.Connect()
+
 func (r *characterResolver) Health(ctx context.Context, obj *model.Character) ([]float64, error) {
 	panic(fmt.Errorf("not implemented"))
 }
@@ -87,5 +95,3 @@ func (r *characterResolver) Power(ctx context.Context, obj *model.Character) ([]
 func (r *characterResolver) MovementSpeed(ctx context.Context, obj *model.Character) (float64, error) {
 	panic(fmt.Errorf("not implemented"))
 }
-
-var db = database.Connect()

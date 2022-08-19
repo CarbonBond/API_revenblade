@@ -25,6 +25,7 @@ type Ability {
 }
 
 type Query {
+  characterName(name: String!): Character!
   character(_id: String!): Character!
   characters: [Character!]!
 }
