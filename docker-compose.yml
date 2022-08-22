@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    container_name: rb_api
+    image: revenblade_api 
+    build:
+      context: .
+      target: production
+    ports:
+      - "8092:80"
+    restart: unless-stopped 
+
