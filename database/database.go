@@ -77,6 +77,9 @@ func (db *DB) Save(input model.NewCharacter) *model.Character {
 	return &model.Character{
 		ID:            res.InsertedID.(primitive.ObjectID).Hex(),
 		Name:          input.Name,
+    Role:          &input.Role,
+    Complexity:    &input.Complexity,
+    AttackType:    &input.AttackType,
 		Health:        input.Health,
 		Power:         input.Power,
 		MovementSpeed: input.MovementSpeed,

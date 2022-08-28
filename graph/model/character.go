@@ -3,6 +3,9 @@ package model
 type Character struct {
 	ID            string    `json:"id"`
 	Name          string    `json:"name"`
+	Complexity    *Complexity  `json:"complexity"`
+	AttackType    *AttackType  `json:"attack_type"`
+	Role          *Role        `json:"role"`
 	Health        []float64 `json:"health"`
 	Power         []float64 `json:"power"`
 	MovementSpeed float64   `json:"movement_speed"`

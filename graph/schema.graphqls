@@ -5,6 +5,9 @@
 type Character {
   id: ID!
   name: String!
+  complexity: Complexity! 
+  attack_type: AttackType!
+  role: Role!
   health: [Float!]!
   power: [Float!]!
   movement_speed: Float!
@@ -15,6 +18,25 @@ type Character {
   mobility: Ability!
   heavy: Ability!
   defensive: Ability!
+}
+
+enum Complexity {
+  EASY,
+  INTERMEDIATE,
+  HARD
+}
+
+enum AttackType {
+  MELEE,
+  RANGED,
+  HYBRID
+}
+
+enum Role {
+  CARRY,
+  TANK,
+  SUPPORT,
+  MAGE
 }
 
 type Ability {
@@ -38,6 +60,9 @@ input NewAbility {
 
 input NewCharacter {
   name: String!
+  complexity: Complexity! 
+  attack_type: AttackType!
+  role: Role!
   health: [Float!]!
   power: [Float!]!
   movement_speed: Float!
